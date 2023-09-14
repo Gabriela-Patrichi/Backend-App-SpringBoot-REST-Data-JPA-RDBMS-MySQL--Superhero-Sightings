@@ -16,7 +16,7 @@ public class SuperDto {
     private String superDescription;
 
     private SuperTypeDto superType;
-
     // private String superType;
+
     private String superPower;
 }
