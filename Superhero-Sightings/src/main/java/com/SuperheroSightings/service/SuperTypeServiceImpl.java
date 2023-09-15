@@ -36,7 +36,7 @@ public class SuperTypeServiceImpl implements SuperTypeService {
         for (SuperTypeEntity eachTypeEntity : allSuperTypesEntity){
             SuperTypeDto eachTypeDto = new SuperTypeDto();
             //copy each entity into a SuperTypeDto object, using BeanUtils
-            BeanUtils.copyProperties(eachTypeDto,eachTypeDto);
+            BeanUtils.copyProperties(eachTypeEntity,eachTypeDto);
             //add each dto to the collection
             allSuperTypesDto.add(eachTypeDto);
         }
@@ -56,6 +56,7 @@ public class SuperTypeServiceImpl implements SuperTypeService {
         // check if superTypeEntityOptional has the data
         if(superTypeEntityOptional.isPresent()){
             //if so, copy the entity object into a dto object
+            superTypeDto=new SuperTypeDto();
             BeanUtils.copyProperties(superTypeEntityOptional.get(),superTypeDto);
         }
         return superTypeDto;

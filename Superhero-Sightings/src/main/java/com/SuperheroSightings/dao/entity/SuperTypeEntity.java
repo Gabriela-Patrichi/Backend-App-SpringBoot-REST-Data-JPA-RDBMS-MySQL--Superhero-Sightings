@@ -15,11 +15,11 @@ import lombok.*;
 public class SuperTypeEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name=" type_id")
+    @Column(name="type_id")
     private int superTypeId;
-    @Column(name=" type_name ")
+    @Column(name="type_name")
     private String superTypeName;
-    @Column(name="type_description ")
+    @Column(name="type_description")
     private String superTypeDescription;
 
 }
