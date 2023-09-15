@@ -18,12 +18,12 @@ public class SuperOrganizationEntity {
     @Column(name = "super_org_id")
     private int superOrg;
 
-    @JoinColumn(name = "super_id")
     @ManyToOne
+    @JoinColumn(name = "super_id")
     private SuperEntity superEntity;
 
-    @JoinColumn(name = "org_id")
     @ManyToOne
+    @JoinColumn(name = "org_id")
     private OrganizationEntity organizationEntity;
 
 }

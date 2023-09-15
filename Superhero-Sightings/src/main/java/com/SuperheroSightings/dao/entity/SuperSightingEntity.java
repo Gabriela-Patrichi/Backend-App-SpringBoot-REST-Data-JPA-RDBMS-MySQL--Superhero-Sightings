@@ -19,12 +19,13 @@ public class SuperSightingEntity {
     @Column(name = "super_sighting_id")
     private int superSightingId;
 
-    @JoinColumn(name = "sighting_id")
     @ManyToOne
+    @JoinColumn(name = "sighting_id")
+
     private SightingEntity sightingEntity;
 
-    @JoinColumn(name = "super_id")
     @ManyToOne
+    @JoinColumn(name = "super_id")
     private SuperEntity superEntity;
 
 }

@@ -26,8 +26,8 @@ public class SuperEntity {
     @Column(name="super_description")
     private String superDescription;
 
-    @JoinColumn(name="super_type")
     @ManyToOne // many supers can be of 1 super type
+    @JoinColumn(name="super_type")
     private SuperTypeEntity superTypeEntity; //object composition
 
     @Column(name="super_power")

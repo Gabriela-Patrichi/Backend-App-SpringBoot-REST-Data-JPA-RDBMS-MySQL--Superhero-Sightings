@@ -22,8 +22,8 @@ public class SightingEntity {
     @Column(name = "sighting_id")
     private int sightingId;
 
-    @JoinColumn(name = "location_id")
     @ManyToOne
+    @JoinColumn(name = "location_id")
     private LocationEntity locationEntity;
 
     @Column(name = "sighting_date")

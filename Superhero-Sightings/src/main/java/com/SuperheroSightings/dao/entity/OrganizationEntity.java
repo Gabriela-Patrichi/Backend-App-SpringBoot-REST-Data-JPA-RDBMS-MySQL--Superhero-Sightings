@@ -29,8 +29,8 @@ public class OrganizationEntity {
     @Column(name="org_contact_info")
     private String orgContactInfo;
 
-    @JoinColumn(name="org_type")
     @ManyToOne
+    @JoinColumn(name="org_type")
     private SuperTypeEntity orgSuperTypeEntity; //object composition
 
 }
