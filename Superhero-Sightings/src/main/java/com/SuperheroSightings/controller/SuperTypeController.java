@@ -42,7 +42,7 @@ public class SuperTypeController {
     // 4. update a supertype
     // http://localhost:7474/supertypes
     @PutMapping("/supertypes")
-    public SuperTypeDto updateAuthor(@RequestBody SuperTypeDto updateSuperType) {
+    public SuperTypeDto updateSuperType(@RequestBody SuperTypeDto updateSuperType) {
         return superTypeService.updateSuperType(updateSuperType);
     }
 
