@@ -15,7 +15,6 @@ public class SightingDto {
 
     private int sightingId;
     private LocationDto locationId;
-  //  private int locationId;
     private Date locationDate;
 
 }

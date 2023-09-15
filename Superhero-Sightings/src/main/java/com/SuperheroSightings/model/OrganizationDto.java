@@ -16,5 +16,5 @@ public class OrganizationDto {
     private String orgDescription;
     private String orgContactInfo;
     private SuperTypeDto orgType;
-    // private String orgType;
+
 }
