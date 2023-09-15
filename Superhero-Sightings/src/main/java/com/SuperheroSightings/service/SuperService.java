@@ -12,4 +12,6 @@ public interface SuperService {
     public SuperDto addSuper(SuperDto newSuper);
     public SuperDto updateSuper(SuperDto updateSuper);
     public void removeSuper(int superId);
+
+    public List<SuperDto> fetchSuperByName(String superName);
 }

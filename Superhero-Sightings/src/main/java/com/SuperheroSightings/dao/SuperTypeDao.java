@@ -11,4 +11,4 @@ public interface SuperTypeDao extends JpaRepository <SuperTypeEntity,Integer>{
 }
 
 // extends JPARepository interface, which has 2 generics:
-// entity and the data type of the PK (int becomes Integer wrapper class)
+// entity and the data type of the PK (int becomes Integer wrapper class, as primitive data cannot be used as generics)
