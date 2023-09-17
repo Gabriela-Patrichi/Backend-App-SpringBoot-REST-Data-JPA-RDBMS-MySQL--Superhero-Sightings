@@ -8,8 +8,8 @@ public interface OrganizationService {
 
     public List<OrganizationDto> fetchAllOrganizations();
     public OrganizationDto fetchAnOrganization (int orgId);
-    public OrganizationDto addOrganization(OrganizationDto newSuper);
-    public OrganizationDto updateOrganization(OrganizationDto updateSuper);
-    public void removeOrganization(int superId);
+    public OrganizationDto addOrganization(OrganizationDto newOrganization);
+    public OrganizationDto updateOrganization(OrganizationDto updateOrganization);
+    public void removeOrganization(int orgId);
 
 }

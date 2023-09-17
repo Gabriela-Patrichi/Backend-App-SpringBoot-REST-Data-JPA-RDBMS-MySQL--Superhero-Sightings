@@ -94,7 +94,6 @@ public class SuperServiceImpl implements SuperService {
         //make use of saneAndFlush in-built method for the newSuperEntity (containing also the supertype entity)
         superDao.saveAndFlush(newSuperEntity);
 
-        //set the SuperTypeDto within the SuperDto
         newSuper.setSuperId(newSuperEntity.getSuperId());
 
         //return the SuperDto
