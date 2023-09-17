@@ -35,7 +35,7 @@ public class SuperController {
     // 2. fetch a super
     // http://localhost:7474/supers/2
     @GetMapping("/supers/{bid}")  // PathVariable with the name bid and should be extracted and store in a java variable/parameter(superId)
-    public ResponseEntity<SuperDto> fetchABook(@PathVariable("bid") int superId) {
+    public ResponseEntity<SuperDto> fetchSuper(@PathVariable("bid") int superId) {
         return new ResponseEntity<SuperDto>(superService.fetchASuper(superId), HttpStatus.OK);
     }
 

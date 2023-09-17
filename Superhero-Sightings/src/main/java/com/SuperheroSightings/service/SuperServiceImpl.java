@@ -22,7 +22,9 @@ public class SuperServiceImpl implements SuperService {
 
 @Autowired
     public SuperServiceImpl(SuperDao superDao) {
-        this.superDao = superDao;
+
+    this.superDao = superDao;
+
     }
 
     @Override

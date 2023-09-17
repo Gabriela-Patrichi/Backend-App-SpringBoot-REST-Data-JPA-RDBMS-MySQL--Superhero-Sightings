@@ -14,7 +14,7 @@ import java.util.Date;
 public class SightingDto {
 
     private int sightingId;
-    private LocationDto locationId;
+    private LocationDto location;
     private Date locationDate;
 
 }
