@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
@@ -36,5 +37,9 @@ public class LocationEntity {
 
     @Column(name="location_longitude")
     private BigDecimal longitude;
+
+    //one to many relationship with Sighting, achieving therefore bidirectional mapping
+    @OneToMany(mappedBy = "locationEntity")
+    private List<SightingEntity> allsightings;
 
 }

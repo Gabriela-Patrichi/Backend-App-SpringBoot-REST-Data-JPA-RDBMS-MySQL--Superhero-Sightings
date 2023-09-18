@@ -2,8 +2,12 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.LocationDao;
 import com.SuperheroSightings.dao.entity.LocationEntity;
+import com.SuperheroSightings.dao.entity.SightingEntity;
+import com.SuperheroSightings.dao.entity.SuperEntity;
 import com.SuperheroSightings.dao.entity.SuperTypeEntity;
 import com.SuperheroSightings.model.LocationDto;
+import com.SuperheroSightings.model.SightingDto;
+import com.SuperheroSightings.model.SuperDto;
 import com.SuperheroSightings.model.SuperTypeDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +61,30 @@ public class LocationServiceImpl implements LocationService{
             //if so, copy the entity object into a dto object
             locationDto =new LocationDto();
             BeanUtils.copyProperties(locationEntityOptional.get(),locationDto);
+
+            //now, also include the Sighting collection which Location object contains
+            List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
+            for(SightingEntity eachSightingEntity: locationEntityOptional.get().getAllsightings()){
+                SightingDto eachSightingDto = new SightingDto();
+                BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
+
+                //now, also include the Supers collection which Sighting object contains
+                List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
+                for(SuperEntity eachSuperEntity: eachSightingEntity.getAllSupers()){
+                    SuperDto eachSuperDto = new SuperDto();
+                    BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
+                    allSupersDto.add(eachSuperDto);
+                }
+                //set collection of Super in each SightingDto obj
+                eachSightingDto.setAllSupers(allSupersDto);
+
+                //now add each sighting (containing the super collection) to the sighting collection
+                allSightingsDto.add(eachSightingDto);
+            }
+
+            //set the Sighting collection (containing also the Super collection) in each LocationDto obj
+            locationDto.setAllsightings(allSightingsDto);
+
         }
         return locationDto;
     }

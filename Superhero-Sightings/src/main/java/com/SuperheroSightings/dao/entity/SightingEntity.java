@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
@@ -28,5 +29,18 @@ public class SightingEntity {
 
     @Column(name = "sighting_date")
     private Date locationDate;
+
+    //implement the ManyToMany relationship between the Sightings and Supers
+    //joinTable name specifies the table that connects these 2 tables
+    //since @JoinTable is used here, sighting_details is the owner and super_details would be the inverse side
+    //2nd attribute is joinColumns (on the FK column which connects the owner entity and the 3rd table)
+    //and 3rd attribute inverseJoinColumn (map on the FK column of the other column referencing the 3rd table)
+    @ManyToMany
+    @JoinTable (name = "super_sighting",
+            joinColumns = @JoinColumn(name="sighting_id"),
+            inverseJoinColumns = @JoinColumn(name = "super_id"))
+    private List<SuperEntity> allSupers; //introducing a collection of Supers
+
+
 
 }

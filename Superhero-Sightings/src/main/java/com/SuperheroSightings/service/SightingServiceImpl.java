@@ -2,10 +2,7 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SightingDao;
 import com.SuperheroSightings.dao.entity.*;
-import com.SuperheroSightings.model.LocationDto;
-import com.SuperheroSightings.model.OrganizationDto;
-import com.SuperheroSightings.model.SightingDto;
-import com.SuperheroSightings.model.SuperTypeDto;
+import com.SuperheroSightings.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,11 +70,24 @@ public class SightingServiceImpl implements SightingService {
 
             //now set the location dto into the sighting dto
             sightingDto.setLocation(locationDto);
+
+
+            //now, also include the Supers collection which Sighting object contains
+            List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
+            for(SuperEntity eachSuperEntity: optionalSightingEntity.get().getAllSupers()){
+                SuperDto eachSuperDto = new SuperDto();
+                BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
+                allSupersDto.add(eachSuperDto);
+            }
+
+            //set it in each SightingDto obj
+            sightingDto.setAllSupers(allSupersDto);
         }
 
         //return the sightingDto object
         return sightingDto;
     }
+
 
     @Override
     public SightingDto addSighting(SightingDto newSighting) {

@@ -1,8 +1,10 @@
 package com.SuperheroSightings.model;
 
+import com.SuperheroSightings.dao.entity.SightingEntity;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
@@ -18,4 +20,7 @@ public class LocationDto {
     private String locationAddress;
     private BigDecimal latitude;
     private BigDecimal longitude;
+
+    private List<SightingDto> allsightings;
+
 }
