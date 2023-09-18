@@ -2,9 +2,11 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SuperDao;
 import com.SuperheroSightings.dao.entity.LocationEntity;
+import com.SuperheroSightings.dao.entity.OrganizationEntity;
 import com.SuperheroSightings.dao.entity.SuperEntity;
 import com.SuperheroSightings.dao.entity.SuperTypeEntity;
 import com.SuperheroSightings.model.LocationDto;
+import com.SuperheroSightings.model.OrganizationDto;
 import com.SuperheroSightings.model.SuperDto;
 import com.SuperheroSightings.model.SuperTypeDto;
 import org.springframework.beans.BeanUtils;
@@ -48,6 +50,17 @@ public class SuperServiceImpl implements SuperService {
             //next set it in the superDto object
             eachSuperDto.setSuperType(superTypeDto);
 
+            //REFERRING TO THE ORG MANY-TO-MANY RELATIONSHIP
+            List<OrganizationDto> allOrganizationsDto = new ArrayList<OrganizationDto>();
+            for(OrganizationEntity eachOrganizationEntity : eachSuperEntity.getAllOrganizations()){
+                OrganizationDto eachOrganizationDto = new OrganizationDto();
+                BeanUtils.copyProperties(eachOrganizationEntity,eachOrganizationDto);
+                allOrganizationsDto.add(eachOrganizationDto);
+            }
+
+            //set the organization dto collection inside the super dto
+            eachSuperDto.setAllOrganizations(allOrganizationsDto);
+
             //now the eachSuperDto contains all data and added to the collection
             allSuperDto.add(eachSuperDto);
 
@@ -71,13 +84,26 @@ public class SuperServiceImpl implements SuperService {
             SuperTypeDto superTypeDto= new SuperTypeDto();
             BeanUtils.copyProperties(superEntityOptional.get().getSuperTypeEntity(), superTypeDto);
 
-            //next set it in the superDto object
+            //next, set it in the superDto object
             superDto.setSuperType(superTypeDto);
+
+            //Similarly , deal with the collection of Organizations object composition
+            List<OrganizationDto> allOrganizationsDto = new ArrayList<OrganizationDto>();
+           // BeanUtils.copyProperties(superEntityOptional.get().getAllOrganizations(), organizationsDtoOfSuper);
+
+            for(OrganizationEntity eachOrganizationEntity: superEntityOptional.get().getAllOrganizations()){
+                OrganizationDto eachOrganizationDto = new OrganizationDto();
+                BeanUtils.copyProperties(eachOrganizationEntity, eachOrganizationDto);
+                allOrganizationsDto.add(eachOrganizationDto);
+            }
+            //set it in each SuperDto obj
+            superDto.setAllOrganizations(allOrganizationsDto);
 
         }
         return superDto;
-
     }
+
+
 
     @Override
     public SuperDto addSuper(SuperDto newSuper) {

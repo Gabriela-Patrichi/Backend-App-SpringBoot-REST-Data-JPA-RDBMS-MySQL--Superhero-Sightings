@@ -46,6 +46,19 @@ public class OrganizationServiceImpl implements OrganizationService{
             //next set it in the OrganizationDto object
             eachOrganizationDto.setOrgType(superTypeDto);
 
+            //SIMILARLY, traverse through the collection of Super Entity and add theentty into a DTO object
+            List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
+            for(SuperEntity eachSuperEntity: eachOrganizationEntity.getAllSupers()){
+                SuperDto eachSuperDto = new SuperDto();
+                BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
+
+                // however, now I need to also copy the supertype object inside the super type
+                allSupersDto.add(eachSuperDto);
+            }
+
+            //set it in each OrgDTO obj
+            eachOrganizationDto.setAllSupers(allSupersDto);
+
             //add the Dto to the collection (containing now the object superTypeDto too)
             allOrganizationsDto.add(eachOrganizationDto);
 
@@ -72,6 +85,22 @@ public class OrganizationServiceImpl implements OrganizationService{
 
             //next set it in the superDto object
             organizationDto.setOrgType(superTypeDto);
+
+            //similarly, introduce the collection of Supers which an organization contains
+            List<SuperEntity> allSuperEntity= optionalOrganizationEntity.get().getAllSupers();
+            List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
+            //this will have an empty collection only
+            //   BeanUtils.copyProperties(allSuperEntity,allSupersDto);
+            //put together the collection 1 by 1
+
+            for(SuperEntity eachSuperEntity: optionalOrganizationEntity.get().getAllSupers()){
+                SuperDto eachSuperDto = new SuperDto();
+                BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
+                allSupersDto.add(eachSuperDto);
+            }
+
+            //set it in each OrgDTO obj
+            organizationDto.setAllSupers(allSupersDto);
 
         }
         return organizationDto;

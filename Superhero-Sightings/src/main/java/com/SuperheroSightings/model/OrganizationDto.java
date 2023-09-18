@@ -1,6 +1,9 @@
 package com.SuperheroSightings.model;
 
+import com.SuperheroSightings.dao.entity.SuperEntity;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
@@ -17,4 +20,6 @@ public class OrganizationDto {
     private String orgContactInfo;
     private SuperTypeDto orgType;
 
+    //corresponding to the entity
+    private List<SuperDto> allSupers;
 }

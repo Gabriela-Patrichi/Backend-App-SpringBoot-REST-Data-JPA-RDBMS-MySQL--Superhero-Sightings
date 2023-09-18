@@ -4,6 +4,8 @@ import com.SuperheroSightings.model.SuperTypeDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -32,5 +34,18 @@ public class OrganizationEntity {
     @ManyToOne
     @JoinColumn(name="org_type")
     private SuperTypeEntity orgSuperTypeEntity; //object composition
+
+    //implement the ManyToMany relationship between the Supers and Organizations
+    //joinTable name specifies the table that connects these 2 tables
+    //since @JoinTable is used here, OrganizationEntity (organization_details) is the owner and super_details would be the inverse side
+    //2nd attribute is joinColumns (on the FK column which connects the owner entity and the 3rd table)
+    //then inverseJoinColumn (map on the FK column of the other column referencing the 3rd table)
+    @ManyToMany
+    @JoinTable (name = "super_organization",
+            joinColumns = @JoinColumn(name="org_id"),
+            inverseJoinColumns = @JoinColumn(name = "super_id"))
+    private List<SuperEntity> allSupers; //introducing a collection of Supers
+
+
 
 }

@@ -1,6 +1,9 @@
 package com.SuperheroSightings.model;
 
+import com.SuperheroSightings.dao.entity.SuperEntity;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
@@ -16,4 +19,7 @@ public class SuperDto {
     private String superDescription;
     private SuperTypeDto superType;
     private String superPower;
+
+    //to reflect the many-to-many relationship with Organizations
+    private List<OrganizationDto> allOrganizations;
 }
