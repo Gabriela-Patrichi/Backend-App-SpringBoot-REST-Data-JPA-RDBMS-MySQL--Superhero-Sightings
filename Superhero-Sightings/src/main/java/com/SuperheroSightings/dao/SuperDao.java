@@ -10,14 +10,12 @@ import java.util.List;
 @Repository
 public interface SuperDao extends JpaRepository<SuperEntity, Integer>{
 
-//would require extra finder methods for methods aside from the 5 CRUD operations
-    //te method has a particular pattern
+//aside from the 5 CRUD operations, it would require extra Finder methods for methods
+//similarly , we could use JPQL (Java Persistence Querying Language) - which works on your entities)
 
     //for example, we want to fetch supers by their name, find by and then use the entity var name
-     List<SuperEntity> findBySuperName(String superName);
+   //  List<SuperEntity> findBySuperName(String superName);
 
-     //similarly , we could use JPQL (Java Persistence Querying Language) - which works on your entities
-    // can look it up
 }
 
 //JPARepository is an interface

@@ -3,6 +3,7 @@ package com.SuperheroSightings.model;
 import com.SuperheroSightings.dao.entity.SuperEntity;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class SightingDto {
 
     private int sightingId;
     private LocationDto location;
-    private Date locationDate;
+    private LocalDate sightingDate;
 
     private List<SuperDto> allSupers; //introducing a collection of Supers, corresponding to the Entity Dao mapping object
 }

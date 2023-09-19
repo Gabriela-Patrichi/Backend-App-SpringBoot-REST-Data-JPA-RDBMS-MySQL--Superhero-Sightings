@@ -2,6 +2,8 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.model.SightingDto;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SightingService {
@@ -11,4 +13,6 @@ public interface SightingService {
     public SightingDto addSighting(SightingDto newSighting);
     public SightingDto updateSighting(SightingDto updateSighting);
     public void removeSighting(int sightingId);
+
+    public List<SightingDto> fetchSightingsByDate (LocalDate sightingDate);
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -139,4 +141,44 @@ public class SightingServiceImpl implements SightingService {
         //deleteById method
         sightingDao.deleteById(sightingId);
     }
+
+    @Override
+    public List<SightingDto> fetchSightingsByDate(LocalDate sightingDate) {
+
+        //call the findByDate method from the Dao layer
+        List<SightingEntity> allSightingEntity = sightingDao.findBySightingDate(sightingDate);
+        List<SightingDto> allSightingDto = new ArrayList<SightingDto>();
+
+        //traverse the collection to get each entity, copy it in a dto and add it to the SightingDto collection of
+        for (SightingEntity eachSightingEntity: allSightingEntity){
+            SightingDto eachSightingDto = new SightingDto();
+            BeanUtils.copyProperties(eachSightingEntity,eachSightingDto);
+
+            //now also include the location object and the collections of supers
+
+            //copy the location object inside each sighting
+            LocationDto locationDto = new LocationDto();
+            BeanUtils.copyProperties(eachSightingEntity.getLocationEntity(), locationDto);
+            //set locationDto object in the SightingDto object
+            eachSightingDto.setLocation(locationDto);
+
+            //include the Supers collection which each Sighting object contains
+            List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
+            for(SuperEntity eachSuperEntity: eachSightingEntity.getAllSupers()){
+                SuperDto eachSuperDto = new SuperDto();
+                BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
+                allSupersDto.add(eachSuperDto);
+
+                //set the collection inside each sightingDto
+                eachSightingDto.setAllSupers(allSupersDto);
+            }
+
+            //add the eachSightingDto (containg the SuperSto collection and the ObjectDto) to the collection
+            allSightingDto.add(eachSightingDto);
+        }
+
+        //return collection of Sightings
+        return allSightingDto;
+    }
 }
+

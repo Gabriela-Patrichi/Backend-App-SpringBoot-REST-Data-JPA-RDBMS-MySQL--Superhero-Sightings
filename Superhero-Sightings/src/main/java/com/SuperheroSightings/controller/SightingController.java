@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -55,6 +57,13 @@ public class SightingController {
     public ResponseEntity<Void> removeSighting(@PathVariable("bid") int sightingId) {
         sightingService.removeSighting(sightingId);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    // 6. fetch sightings by a particular date
+    // http://localhost:7474/sightings/date/2020-10-10
+    @GetMapping("/sightings/date/{sightingDate}")
+    public ResponseEntity <List<SightingDto>> fetchSightingsByDate(@PathVariable("sightingDate") LocalDate sightingDate){
+        return new ResponseEntity<List<SightingDto>>(sightingService.fetchSightingsByDate(sightingDate), HttpStatus.OK);
     }
 
 }

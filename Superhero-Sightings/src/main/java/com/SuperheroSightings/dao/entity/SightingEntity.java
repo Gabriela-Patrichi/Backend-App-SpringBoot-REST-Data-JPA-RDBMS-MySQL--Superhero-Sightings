@@ -4,6 +4,7 @@ import com.SuperheroSightings.model.LocationDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class SightingEntity {
     private LocationEntity locationEntity;
 
     @Column(name = "sighting_date")
-    private Date locationDate;
+    private LocalDate sightingDate;
 
     //implement the ManyToMany relationship between the Sightings and Supers
     //joinTable name specifies the table that connects these 2 tables
