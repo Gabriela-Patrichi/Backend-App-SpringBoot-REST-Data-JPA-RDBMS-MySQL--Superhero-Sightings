@@ -62,7 +62,7 @@ public class LocationServiceImpl implements LocationService{
             locationDto =new LocationDto();
             BeanUtils.copyProperties(locationEntityOptional.get(),locationDto);
 
-            //now, also include the Sighting collection which Location object contains
+            //also include the Sighting collection which Location object contains
             List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
             for(SightingEntity eachSightingEntity: locationEntityOptional.get().getAllsightings()){
                 SightingDto eachSightingDto = new SightingDto();

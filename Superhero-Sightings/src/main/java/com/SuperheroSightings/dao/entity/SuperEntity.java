@@ -43,6 +43,10 @@ public class SuperEntity {
     private List<OrganizationEntity> allOrganizations;
 
 
+    //similarly, implement the ManyToMany relationship between the Supers and Sightings
+    @ManyToMany(mappedBy = "allSupers")
+    private List<SightingEntity> allSightings;
+
 }
 
 //AUTO vs Identity, not the Same. Auto does not mean here auto increment value

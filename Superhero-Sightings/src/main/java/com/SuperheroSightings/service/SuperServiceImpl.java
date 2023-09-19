@@ -1,14 +1,8 @@
 package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SuperDao;
-import com.SuperheroSightings.dao.entity.LocationEntity;
-import com.SuperheroSightings.dao.entity.OrganizationEntity;
-import com.SuperheroSightings.dao.entity.SuperEntity;
-import com.SuperheroSightings.dao.entity.SuperTypeEntity;
-import com.SuperheroSightings.model.LocationDto;
-import com.SuperheroSightings.model.OrganizationDto;
-import com.SuperheroSightings.model.SuperDto;
-import com.SuperheroSightings.model.SuperTypeDto;
+import com.SuperheroSightings.dao.entity.*;
+import com.SuperheroSightings.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,6 +92,28 @@ public class SuperServiceImpl implements SuperService {
             }
             //set it in each SuperDto obj
             superDto.setAllOrganizations(allOrganizationsDto);
+
+
+            //Similarly , deal with the collection of Sighting object composition
+            List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
+            for(SightingEntity eachSightingEntity: superEntityOptional.get().getAllSightings()){
+                SightingDto eachSightingDto = new SightingDto();
+                BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
+
+            //now, also include the Location object which a Sighting object contains
+                LocationDto locationDto = new LocationDto();
+               LocationEntity locationEntity = eachSightingEntity.getLocationEntity();
+               BeanUtils.copyProperties(locationEntity, locationDto);
+
+                //set it in each SightingDto obj
+                eachSightingDto.setLocation(locationDto);
+
+                //now add each sighting(containg also location object) to the collection of SightingDto
+                allSightingsDto.add(eachSightingDto);
+            }
+
+        //set it in each SuperDto obj
+            superDto.setAllSightings(allSightingsDto);
 
         }
         return superDto;

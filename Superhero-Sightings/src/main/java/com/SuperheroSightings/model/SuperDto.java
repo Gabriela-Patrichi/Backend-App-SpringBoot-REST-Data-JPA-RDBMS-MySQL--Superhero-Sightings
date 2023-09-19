@@ -1,5 +1,6 @@
 package com.SuperheroSightings.model;
 
+import com.SuperheroSightings.dao.entity.SightingEntity;
 import com.SuperheroSightings.dao.entity.SuperEntity;
 import lombok.*;
 
@@ -22,4 +23,7 @@ public class SuperDto {
 
     //to reflect the many-to-many relationship with Organizations
     private List<OrganizationDto> allOrganizations;
+
+    //to reflect the SightingEntity mapping object (many-to-many with supers)
+    private List<SightingDto> allSightings;
 }
