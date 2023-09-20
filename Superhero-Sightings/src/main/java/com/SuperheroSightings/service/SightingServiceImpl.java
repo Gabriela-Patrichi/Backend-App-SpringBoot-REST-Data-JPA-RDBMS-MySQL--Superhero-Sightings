@@ -2,6 +2,7 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SightingDao;
 import com.SuperheroSightings.dao.entity.*;
+import com.SuperheroSightings.exception.ApplicationException;
 import com.SuperheroSightings.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,11 @@ public class SightingServiceImpl implements SightingService {
 
             //set it in each SightingDto obj
             sightingDto.setAllSupers(allSupersDto);
+        }
+
+        //if object does not exist, throw custom exception (Application Exception)
+        else {
+            throw new ApplicationException();
         }
 
         //return the sightingDto object

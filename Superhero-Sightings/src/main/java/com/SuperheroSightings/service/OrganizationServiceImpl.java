@@ -4,6 +4,7 @@ import com.SuperheroSightings.dao.OrganizationDao;
 import com.SuperheroSightings.dao.entity.OrganizationEntity;
 import com.SuperheroSightings.dao.entity.SuperEntity;
 import com.SuperheroSightings.dao.entity.SuperTypeEntity;
+import com.SuperheroSightings.exception.ApplicationException;
 import com.SuperheroSightings.model.OrganizationDto;
 import com.SuperheroSightings.model.SuperDto;
 import com.SuperheroSightings.model.SuperTypeDto;
@@ -101,7 +102,11 @@ public class OrganizationServiceImpl implements OrganizationService{
 
             //set it in each OrgDTO obj
             organizationDto.setAllSupers(allSupersDto);
+        }
 
+        //if object does not exist, throw custom exception (Application Exception)
+        else {
+            throw new ApplicationException();
         }
         return organizationDto;
     }

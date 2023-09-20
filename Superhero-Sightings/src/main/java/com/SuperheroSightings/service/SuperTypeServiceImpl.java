@@ -2,6 +2,7 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SuperTypeDao;
 import com.SuperheroSightings.dao.entity.SuperTypeEntity;
+import com.SuperheroSightings.exception.ApplicationException;
 import com.SuperheroSightings.model.SuperTypeDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class SuperTypeServiceImpl implements SuperTypeService {
             //if so, copy the entity object into a dto object
             superTypeDto=new SuperTypeDto();
             BeanUtils.copyProperties(superTypeEntityOptional.get(),superTypeDto);
+        }
+
+        //if object does not exist, throw custom exception (Application Exception)
+        else {
+            throw new ApplicationException();
         }
         return superTypeDto;
     }

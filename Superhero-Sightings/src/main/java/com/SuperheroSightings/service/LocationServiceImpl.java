@@ -5,6 +5,7 @@ import com.SuperheroSightings.dao.entity.LocationEntity;
 import com.SuperheroSightings.dao.entity.SightingEntity;
 import com.SuperheroSightings.dao.entity.SuperEntity;
 import com.SuperheroSightings.dao.entity.SuperTypeEntity;
+import com.SuperheroSightings.exception.ApplicationException;
 import com.SuperheroSightings.model.LocationDto;
 import com.SuperheroSightings.model.SightingDto;
 import com.SuperheroSightings.model.SuperDto;
@@ -84,7 +85,10 @@ public class LocationServiceImpl implements LocationService{
 
             //set the Sighting collection (containing also the Super collection) in each LocationDto obj
             locationDto.setAllsightings(allSightingsDto);
-
+        }
+        //if object does not exist, throw custom exception (Application Exception)
+        else {
+            throw new ApplicationException();
         }
         return locationDto;
     }

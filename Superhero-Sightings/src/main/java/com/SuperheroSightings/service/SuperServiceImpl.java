@@ -2,6 +2,7 @@ package com.SuperheroSightings.service;
 
 import com.SuperheroSightings.dao.SuperDao;
 import com.SuperheroSightings.dao.entity.*;
+import com.SuperheroSightings.exception.ApplicationException;
 import com.SuperheroSightings.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,13 +109,17 @@ public class SuperServiceImpl implements SuperService {
                 //set it in each SightingDto obj
                 eachSightingDto.setLocation(locationDto);
 
-                //now add each sighting(containg also location object) to the collection of SightingDto
+                //now add each sighting(containing also location object) to the collection of SightingDto
                 allSightingsDto.add(eachSightingDto);
             }
 
         //set it in each SuperDto obj
             superDto.setAllSightings(allSightingsDto);
 
+        }
+        //if object does not exist, throw custom exception (Application Exception)
+        else {
+            throw new ApplicationException();
         }
         return superDto;
     }
