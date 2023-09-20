@@ -6,6 +6,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -14,31 +17,31 @@ import java.util.List;
 @EqualsAndHashCode // equals and hash code
 
 @Entity //declare the class as an entity
-@Table(name="location_details") //map the class to the table named location_details
+@Table(name = "location_details") //map the class to the table named location_details
 
 public class LocationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="location_id")
+    @Column(name = "location_id")
     private int locationId;
 
-    @Column(name="location_name")
+    @Column(name = "location_name")
     private String locationName;
 
-    @Column(name="location_desc")
+    @Column(name = "location_desc")
     private String locationDescription;
 
-    @Column(name="location_address")
+    @Column(name = "location_address")
     private String locationAddress;
 
-    @Column(name="location_latitude")
+    @Column(name = "location_latitude")
     private BigDecimal latitude;
 
-    @Column(name="location_longitude")
+    @Column(name = "location_longitude")
     private BigDecimal longitude;
 
-    //one to many relationship with Sighting, achieving therefore bidirectional mapping
+    //one to many relationship with Sighting (which also has implemented ManyToOne, achieving therefore bidirectional mapping)
     @OneToMany(mappedBy = "locationEntity")
     private List<SightingEntity> allsightings;
 

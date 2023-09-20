@@ -3,6 +3,8 @@ package com.SuperheroSightings.dao.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -11,15 +13,15 @@ import lombok.*;
 @EqualsAndHashCode // equals and hash code
 
 @Entity //declare the class as an entity
-@Table(name="super_type_details") //map the class to the table named super_type_details
+@Table(name = "super_type_details") //map the class to the table named super_type_details
 public class SuperTypeEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="type_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "type_id")
     private int superTypeId;
-    @Column(name="type_name")
+    @Column(name = "type_name")
     private String superTypeName;
-    @Column(name="type_description")
+    @Column(name = "type_description")
     private String superTypeDescription;
 
 }

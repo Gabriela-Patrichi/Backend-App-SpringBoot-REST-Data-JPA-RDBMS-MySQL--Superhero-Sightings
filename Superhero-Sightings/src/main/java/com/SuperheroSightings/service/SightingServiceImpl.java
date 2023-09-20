@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -36,9 +35,9 @@ public class SightingServiceImpl implements SightingService {
         List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
 
         //traverse through collection using the forEach method
-        allSightingsEntities.forEach((eachSightingEntity)->{
+        allSightingsEntities.forEach((eachSightingEntity) -> {
             SightingDto eachSightingDto = new SightingDto();
-            BeanUtils.copyProperties(eachSightingEntity,eachSightingDto);
+            BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
 
             //now copy the location object inside each sighting
             LocationDto locationDto = new LocationDto();
@@ -56,14 +55,13 @@ public class SightingServiceImpl implements SightingService {
     }
 
 
-
     @Override
     public SightingDto fetchASighting(int sightingId) {
         //findById return an Optional<Entity> type
         Optional<SightingEntity> optionalSightingEntity = sightingDao.findById(sightingId);
         SightingDto sightingDto = null;
         // if optionalSightingEntity has data, copy the entity to a corresponding SightingDTO object
-        if (optionalSightingEntity.isPresent()){
+        if (optionalSightingEntity.isPresent()) {
             sightingDto = new SightingDto();
             BeanUtils.copyProperties(optionalSightingEntity.get(), sightingDto);
 
@@ -74,10 +72,9 @@ public class SightingServiceImpl implements SightingService {
             //now set the location dto into the sighting dto
             sightingDto.setLocation(locationDto);
 
-
             //now, also include the Supers collection which Sighting object contains
             List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
-            for(SuperEntity eachSuperEntity: optionalSightingEntity.get().getAllSupers()){
+            for (SuperEntity eachSuperEntity : optionalSightingEntity.get().getAllSupers()) {
                 SuperDto eachSuperDto = new SuperDto();
                 BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
                 allSupersDto.add(eachSuperDto);
@@ -102,7 +99,7 @@ public class SightingServiceImpl implements SightingService {
 
         //copy the incoming DTO in an entity object
         SightingEntity newSightingEntity = new SightingEntity();
-        BeanUtils.copyProperties(newSighting,newSightingEntity);
+        BeanUtils.copyProperties(newSighting, newSightingEntity);
 
         //copy also the inner location object
         LocationEntity locationEntity = new LocationEntity();
@@ -126,11 +123,11 @@ public class SightingServiceImpl implements SightingService {
 
         //copy the incoming DTO in an entity object
         SightingEntity updateSightingEntity = new SightingEntity();
-        BeanUtils.copyProperties(updateSighting,updateSightingEntity);
+        BeanUtils.copyProperties(updateSighting, updateSightingEntity);
 
         //copy also the inner location object
         LocationEntity locationEntity = new LocationEntity();
-        BeanUtils.copyProperties(updateSighting.getLocation(),locationEntity);
+        BeanUtils.copyProperties(updateSighting.getLocation(), locationEntity);
 
         //set the location entity as an object of the newSightingEntity
         updateSightingEntity.setLocationEntity(locationEntity);
@@ -156,9 +153,9 @@ public class SightingServiceImpl implements SightingService {
         List<SightingDto> allSightingDto = new ArrayList<SightingDto>();
 
         //traverse the collection to get each entity, copy it in a dto and add it to the SightingDto collection of
-        for (SightingEntity eachSightingEntity: allSightingEntity){
+        for (SightingEntity eachSightingEntity : allSightingEntity) {
             SightingDto eachSightingDto = new SightingDto();
-            BeanUtils.copyProperties(eachSightingEntity,eachSightingDto);
+            BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
 
             //now also include the location object and the collections of supers
 
@@ -170,7 +167,7 @@ public class SightingServiceImpl implements SightingService {
 
             //include the Supers collection which each Sighting object contains
             List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
-            for(SuperEntity eachSuperEntity: eachSightingEntity.getAllSupers()){
+            for (SuperEntity eachSuperEntity : eachSightingEntity.getAllSupers()) {
                 SuperDto eachSuperDto = new SuperDto();
                 BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
                 allSupersDto.add(eachSuperDto);

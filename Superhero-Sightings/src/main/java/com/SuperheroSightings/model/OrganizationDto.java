@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.List;
 
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -20,6 +22,6 @@ public class OrganizationDto {
     private String orgContactInfo;
     private SuperTypeDto orgType;
 
-    //corresponding to the entity
+    //corresponding to the entity (ManytoMany mapping)
     private List<SuperDto> allSupers;
 }

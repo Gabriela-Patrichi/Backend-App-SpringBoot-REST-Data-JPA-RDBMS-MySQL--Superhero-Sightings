@@ -16,6 +16,7 @@ import java.util.List;
 public class SightingController {
 
     SightingService sightingService;
+
     @Autowired
     public SightingController(SightingService sightingService) {
         this.sightingService = sightingService;
@@ -24,7 +25,7 @@ public class SightingController {
     // 1. fetch all sightings
     // http://localhost:7474/sightings
     @GetMapping("/sightings")
-    public ResponseEntity<List<SightingDto>> fetchAllSightings(){
+    public ResponseEntity<List<SightingDto>> fetchAllSightings() {
         // the ResponseEntity wraps up the response body(1st argument) and the status code(2nd argument)
         ResponseEntity<List<SightingDto>> responseEntity = new ResponseEntity<List<SightingDto>>(sightingService.fetchAllSightings(), HttpStatus.OK);
         return responseEntity;
@@ -48,7 +49,7 @@ public class SightingController {
     // http://localhost:7474/sightings
     @PutMapping("/sightings")
     public ResponseEntity<SightingDto> updateSighting(@RequestBody SightingDto updateSighting) {
-      return new ResponseEntity<SightingDto>(sightingService.updateSighting(updateSighting), HttpStatus.OK);
+        return new ResponseEntity<SightingDto>(sightingService.updateSighting(updateSighting), HttpStatus.OK);
     }
 
     // 5. delete a sighting
@@ -62,7 +63,7 @@ public class SightingController {
     // 6. fetch sightings by a particular date
     // http://localhost:7474/sightings/date/2020-10-10
     @GetMapping("/sightings/date/{sightingDate}")
-    public ResponseEntity <List<SightingDto>> fetchSightingsByDate(@PathVariable("sightingDate") LocalDate sightingDate){
+    public ResponseEntity<List<SightingDto>> fetchSightingsByDate(@PathVariable("sightingDate") LocalDate sightingDate) {
         return new ResponseEntity<List<SightingDto>>(sightingService.fetchSightingsByDate(sightingDate), HttpStatus.OK);
     }
 

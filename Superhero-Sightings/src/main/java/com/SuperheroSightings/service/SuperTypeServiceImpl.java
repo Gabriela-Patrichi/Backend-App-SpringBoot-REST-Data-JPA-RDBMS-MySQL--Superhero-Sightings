@@ -27,17 +27,17 @@ public class SuperTypeServiceImpl implements SuperTypeService {
     public List<SuperTypeDto> fetchAllSuperTypes() {
 
         //findAll will return a list of entities of type SuperTypeEntity
-        List <SuperTypeEntity> allSuperTypesEntity = superTypeDao.findAll();
+        List<SuperTypeEntity> allSuperTypesEntity = superTypeDao.findAll();
 
         //this entities however need to be copied into a collection of DTO, which the method returns
-        List <SuperTypeDto> allSuperTypesDto= new ArrayList<SuperTypeDto>();
+        List<SuperTypeDto> allSuperTypesDto = new ArrayList<SuperTypeDto>();
 
         //traverse the entity collection and copy each element into a DTO, which is added to the collection of SuperTypeDtos
         //using an enhanced for loop:
-        for (SuperTypeEntity eachTypeEntity : allSuperTypesEntity){
+        for (SuperTypeEntity eachTypeEntity : allSuperTypesEntity) {
             SuperTypeDto eachTypeDto = new SuperTypeDto();
             //copy each entity into a SuperTypeDto object, using BeanUtils
-            BeanUtils.copyProperties(eachTypeEntity,eachTypeDto);
+            BeanUtils.copyProperties(eachTypeEntity, eachTypeDto);
             //add each dto to the collection
             allSuperTypesDto.add(eachTypeDto);
         }
@@ -55,10 +55,10 @@ public class SuperTypeServiceImpl implements SuperTypeService {
         Optional<SuperTypeEntity> superTypeEntityOptional = superTypeDao.findById(superTypeId);
         SuperTypeDto superTypeDto = null;
         // check if superTypeEntityOptional has the data
-        if(superTypeEntityOptional.isPresent()){
+        if (superTypeEntityOptional.isPresent()) {
             //if so, copy the entity object into a dto object
-            superTypeDto=new SuperTypeDto();
-            BeanUtils.copyProperties(superTypeEntityOptional.get(),superTypeDto);
+            superTypeDto = new SuperTypeDto();
+            BeanUtils.copyProperties(superTypeEntityOptional.get(), superTypeDto);
         }
 
         //if object does not exist, throw custom exception (Application Exception)
@@ -91,7 +91,7 @@ public class SuperTypeServiceImpl implements SuperTypeService {
 
         // the incoming updateSuperType dto has to be copied into an entity object
         SuperTypeEntity updateSuperTypeEntity = new SuperTypeEntity();
-        BeanUtils.copyProperties(updateSuperType,updateSuperTypeEntity);
+        BeanUtils.copyProperties(updateSuperType, updateSuperTypeEntity);
 
         // saveAndFlush applies for both insert and update
         // if the Entity's primary key exists in the DB, ORM treats it as an update

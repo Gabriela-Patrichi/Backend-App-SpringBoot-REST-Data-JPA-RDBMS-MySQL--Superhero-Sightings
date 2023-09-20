@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrganizationServiceImpl implements OrganizationService{
+public class OrganizationServiceImpl implements OrganizationService {
 
     OrganizationDao organizationDao;
 
-    @Autowired
+    @Autowired // Dependency Injection - constructor level preferred
     public OrganizationServiceImpl(OrganizationDao organizationDao) {
         this.organizationDao = organizationDao;
     }
@@ -30,18 +30,18 @@ public class OrganizationServiceImpl implements OrganizationService{
     public List<OrganizationDto> fetchAllOrganizations() {
 
         //findAll will return a collection of OrganizationEntity objects
-        List <OrganizationEntity> allOrganizationsEntity = organizationDao.findAll();
+        List<OrganizationEntity> allOrganizationsEntity = organizationDao.findAll();
 
         //copy the entities into a collection of DTO
-        List <OrganizationDto> allOrganizationsDto= new ArrayList<OrganizationDto>();
+        List<OrganizationDto> allOrganizationsDto = new ArrayList<OrganizationDto>();
 
         //traverse through collection using the forEach method
-        allOrganizationsEntity.forEach((eachOrganizationEntity)->{
+        allOrganizationsEntity.forEach((eachOrganizationEntity) -> {
             OrganizationDto eachOrganizationDto = new OrganizationDto();
-            BeanUtils.copyProperties(eachOrganizationEntity,eachOrganizationDto);
+            BeanUtils.copyProperties(eachOrganizationEntity, eachOrganizationDto);
             //however, this will not copy the composition object (SuperType) which is inside each Organization
             //so, will have to separately copy/ set and add it separately
-            SuperTypeDto superTypeDto= new SuperTypeDto();
+            SuperTypeDto superTypeDto = new SuperTypeDto();
             BeanUtils.copyProperties(eachOrganizationEntity.getOrgSuperTypeEntity(), superTypeDto);
 
             //next set it in the OrganizationDto object
@@ -49,7 +49,7 @@ public class OrganizationServiceImpl implements OrganizationService{
 
             //SIMILARLY, traverse through the collection of Super Entity and add theentty into a DTO object
             List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
-            for(SuperEntity eachSuperEntity: eachOrganizationEntity.getAllSupers()){
+            for (SuperEntity eachSuperEntity : eachOrganizationEntity.getAllSupers()) {
                 SuperDto eachSuperDto = new SuperDto();
                 BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
 
@@ -75,26 +75,26 @@ public class OrganizationServiceImpl implements OrganizationService{
         Optional<OrganizationEntity> optionalOrganizationEntity = organizationDao.findById(orgId);
         OrganizationDto organizationDto = null;
         // check if superTypeEntityOptional has the data
-        if(optionalOrganizationEntity.isPresent()){
+        if (optionalOrganizationEntity.isPresent()) {
             //if so, copy the entity object into a dto object
-            organizationDto =new OrganizationDto();
-            BeanUtils.copyProperties(optionalOrganizationEntity.get(),organizationDto);
+            organizationDto = new OrganizationDto();
+            BeanUtils.copyProperties(optionalOrganizationEntity.get(), organizationDto);
 
             //copy the composition entity object (which is inside the superEntityOptional) into a dto type of object
-            SuperTypeDto superTypeDto= new SuperTypeDto();
+            SuperTypeDto superTypeDto = new SuperTypeDto();
             BeanUtils.copyProperties(optionalOrganizationEntity.get().getOrgSuperTypeEntity(), superTypeDto);
 
             //next set it in the superDto object
             organizationDto.setOrgType(superTypeDto);
 
             //similarly, introduce the collection of Supers which an organization contains
-            List<SuperEntity> allSuperEntity= optionalOrganizationEntity.get().getAllSupers();
+            List<SuperEntity> allSuperEntity = optionalOrganizationEntity.get().getAllSupers();
             List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
             //this will have an empty collection only
             //   BeanUtils.copyProperties(allSuperEntity,allSupersDto);
             //put together the collection 1 by 1
 
-            for(SuperEntity eachSuperEntity: optionalOrganizationEntity.get().getAllSupers()){
+            for (SuperEntity eachSuperEntity : optionalOrganizationEntity.get().getAllSupers()) {
                 SuperDto eachSuperDto = new SuperDto();
                 BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
                 allSupersDto.add(eachSuperDto);
@@ -140,7 +140,7 @@ public class OrganizationServiceImpl implements OrganizationService{
 
         // the incoming dto has to be copied into an entity object
         OrganizationEntity updateOrganizationEntity = new OrganizationEntity();
-        BeanUtils.copyProperties(updateOrganization,updateOrganizationEntity);
+        BeanUtils.copyProperties(updateOrganization, updateOrganizationEntity);
 
         //will need to copy the SuperType object in the Super object
         SuperTypeEntity superTypeEntity = new SuperTypeEntity();

@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -37,11 +38,10 @@ public class SightingEntity {
     //2nd attribute is joinColumns (on the FK column which connects the owner entity and the 3rd table)
     //and 3rd attribute inverseJoinColumn (map on the FK column of the other column referencing the 3rd table)
     @ManyToMany
-    @JoinTable (name = "super_sighting",
-            joinColumns = @JoinColumn(name="sighting_id"),
+    @JoinTable(name = "super_sighting",
+            joinColumns = @JoinColumn(name = "sighting_id"),
             inverseJoinColumns = @JoinColumn(name = "super_id"))
     private List<SuperEntity> allSupers; //introducing a collection of Supers
-
 
 
 }

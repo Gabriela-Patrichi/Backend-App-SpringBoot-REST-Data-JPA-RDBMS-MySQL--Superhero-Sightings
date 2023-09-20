@@ -17,29 +17,29 @@ public class SuperServiceImpl implements SuperService {
 
     SuperDao superDao;
 
-@Autowired
+    @Autowired // Dependency Injection - constructor level preferred
     public SuperServiceImpl(SuperDao superDao) {
 
-    this.superDao = superDao;
+        this.superDao = superDao;
 
     }
 
     @Override
     public List<SuperDto> fetchAllSupers() {
 
-        List <SuperEntity> allSuperEntity = superDao.findAll();
+        List<SuperEntity> allSuperEntity = superDao.findAll();
         //this entities however need to be copied into a collection of DTO, which the method returns
-        List <SuperDto> allSuperDto= new ArrayList<SuperDto>();
+        List<SuperDto> allSuperDto = new ArrayList<SuperDto>();
 
         //traverse through collection using the forEach method
         //consumer functional interface (consumer takes only 1 parameter; if mroe parameters are neede use ByConsumer)
-        allSuperEntity.forEach((eachSuperEntity)->{
+        allSuperEntity.forEach((eachSuperEntity) -> {
             SuperDto eachSuperDto = new SuperDto();
-            BeanUtils.copyProperties(eachSuperEntity,eachSuperDto);
+            BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
 
             //however, this will not copy the composition object which is inside each Super Entity
             //so you have to separately copy/ set it and add it
-            SuperTypeDto superTypeDto= new SuperTypeDto();
+            SuperTypeDto superTypeDto = new SuperTypeDto();
             BeanUtils.copyProperties(eachSuperEntity.getSuperTypeEntity(), superTypeDto);
 
             //next set it in the superDto object
@@ -47,9 +47,9 @@ public class SuperServiceImpl implements SuperService {
 
             //REFERRING TO THE ORG MANY-TO-MANY RELATIONSHIP
             List<OrganizationDto> allOrganizationsDto = new ArrayList<OrganizationDto>();
-            for(OrganizationEntity eachOrganizationEntity : eachSuperEntity.getAllOrganizations()){
+            for (OrganizationEntity eachOrganizationEntity : eachSuperEntity.getAllOrganizations()) {
                 OrganizationDto eachOrganizationDto = new OrganizationDto();
-                BeanUtils.copyProperties(eachOrganizationEntity,eachOrganizationDto);
+                BeanUtils.copyProperties(eachOrganizationEntity, eachOrganizationDto);
                 allOrganizationsDto.add(eachOrganizationDto);
             }
 
@@ -70,13 +70,13 @@ public class SuperServiceImpl implements SuperService {
         Optional<SuperEntity> superEntityOptional = superDao.findById(superId);
         SuperDto superDto = null;
         // check if superTypeEntityOptional has the data
-        if(superEntityOptional.isPresent()){
+        if (superEntityOptional.isPresent()) {
             //if so, copy the entity object into a dto object
-            superDto =new SuperDto();
-            BeanUtils.copyProperties(superEntityOptional.get(),superDto);
+            superDto = new SuperDto();
+            BeanUtils.copyProperties(superEntityOptional.get(), superDto);
 
             //copy the composition entity object (which is inside the superEntityOptional) into a dto type of object
-            SuperTypeDto superTypeDto= new SuperTypeDto();
+            SuperTypeDto superTypeDto = new SuperTypeDto();
             BeanUtils.copyProperties(superEntityOptional.get().getSuperTypeEntity(), superTypeDto);
 
             //next, set it in the superDto object
@@ -84,9 +84,9 @@ public class SuperServiceImpl implements SuperService {
 
             //Similarly , deal with the collection of Organizations object composition
             List<OrganizationDto> allOrganizationsDto = new ArrayList<OrganizationDto>();
-           // BeanUtils.copyProperties(superEntityOptional.get().getAllOrganizations(), organizationsDtoOfSuper);
+            // BeanUtils.copyProperties(superEntityOptional.get().getAllOrganizations(), organizationsDtoOfSuper);
 
-            for(OrganizationEntity eachOrganizationEntity: superEntityOptional.get().getAllOrganizations()){
+            for (OrganizationEntity eachOrganizationEntity : superEntityOptional.get().getAllOrganizations()) {
                 OrganizationDto eachOrganizationDto = new OrganizationDto();
                 BeanUtils.copyProperties(eachOrganizationEntity, eachOrganizationDto);
                 allOrganizationsDto.add(eachOrganizationDto);
@@ -97,14 +97,14 @@ public class SuperServiceImpl implements SuperService {
 
             //Similarly , deal with the collection of Sighting object composition
             List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
-            for(SightingEntity eachSightingEntity: superEntityOptional.get().getAllSightings()){
+            for (SightingEntity eachSightingEntity : superEntityOptional.get().getAllSightings()) {
                 SightingDto eachSightingDto = new SightingDto();
                 BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
 
-            //now, also include the Location object which a Sighting object contains
+                //now, also include the Location object which a Sighting object contains
                 LocationDto locationDto = new LocationDto();
-               LocationEntity locationEntity = eachSightingEntity.getLocationEntity();
-               BeanUtils.copyProperties(locationEntity, locationDto);
+                LocationEntity locationEntity = eachSightingEntity.getLocationEntity();
+                BeanUtils.copyProperties(locationEntity, locationDto);
 
                 //set it in each SightingDto obj
                 eachSightingDto.setLocation(locationDto);
@@ -113,7 +113,7 @@ public class SuperServiceImpl implements SuperService {
                 allSightingsDto.add(eachSightingDto);
             }
 
-        //set it in each SuperDto obj
+            //set it in each SuperDto obj
             superDto.setAllSightings(allSightingsDto);
 
         }
@@ -123,7 +123,6 @@ public class SuperServiceImpl implements SuperService {
         }
         return superDto;
     }
-
 
 
     @Override
@@ -155,7 +154,7 @@ public class SuperServiceImpl implements SuperService {
 
         // the incoming dto has to be copied into an entity object
         SuperEntity updateSuperEntity = new SuperEntity();
-        BeanUtils.copyProperties(updateSuper,updateSuperEntity);
+        BeanUtils.copyProperties(updateSuper, updateSuperEntity);
 
         //will need to copy the SuperType object in the Super object
         //first copy the entity
@@ -175,8 +174,8 @@ public class SuperServiceImpl implements SuperService {
     @Override
     public void removeSuper(int superId) {
 
-    superDao.deleteById(superId);
-    // this will not remove the supertype too, if we want so we nee dto specify the cascade
+        superDao.deleteById(superId);
+        // this will not remove the supertype too, if we want so we nee dto specify the cascade
         // either at SQL table or SuperEntity @Many to One here add cascade too
 
     }

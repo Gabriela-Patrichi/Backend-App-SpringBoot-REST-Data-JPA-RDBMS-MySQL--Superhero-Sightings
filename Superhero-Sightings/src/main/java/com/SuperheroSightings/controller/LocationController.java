@@ -12,6 +12,7 @@ import java.util.List;
 public class LocationController {
 
     LocationService locationService;
+
     @Autowired
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
@@ -20,7 +21,7 @@ public class LocationController {
     // 1. fetch all locations
     // http://localhost:7474/locations
     @GetMapping("/locations")
-    public List<LocationDto> fetchAllLocations(){
+    public List<LocationDto> fetchAllLocations() {
         return locationService.fetchAllLocations();
     }
 

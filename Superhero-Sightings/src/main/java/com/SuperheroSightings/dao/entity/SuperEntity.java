@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.util.List;
 
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -14,25 +16,25 @@ import java.util.List;
 @EqualsAndHashCode // equals and hash code
 
 @Entity //declare the class as an entity
-@Table(name="super_details") //map the class to the table named super_details
+@Table(name = "super_details") //map the class to the table named super_details
 public class SuperEntity {
 
     @Id //PK
-    @GeneratedValue(strategy= GenerationType.IDENTITY) //auto-generated Id
-    @Column(name="super_id") //mapped to the super_id column
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto-generated Id
+    @Column(name = "super_id") //mapped to the super_id column
     private int superId;
 
-    @Column(name="super_name") //mapped to the super_name column
+    @Column(name = "super_name") //mapped to the super_name column
     private String superName;
 
-    @Column(name="super_description") //mapped to the super_description column
+    @Column(name = "super_description") //mapped to the super_description column
     private String superDescription;
 
     @ManyToOne // many supers can be of 1 super type
-    @JoinColumn(name="super_type") //mapped to the super_type column
+    @JoinColumn(name = "super_type") //mapped to the super_type column
     private SuperTypeEntity superTypeEntity; //object composition
 
-    @Column(name="super_power") //mapped to the super_power column
+    @Column(name = "super_power") //mapped to the super_power column
     private String superPower;
 
     //implement the ManyToMany relationship between the Supers and Organizations
@@ -49,5 +51,4 @@ public class SuperEntity {
 
 }
 
-//AUTO vs Identity, not the Same. Auto does not mean here auto increment value
 

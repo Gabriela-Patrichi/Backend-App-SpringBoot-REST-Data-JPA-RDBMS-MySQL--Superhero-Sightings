@@ -19,13 +19,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LocationServiceImpl implements LocationService{
-
-    // Dependency Injection - constructor level preferred
+public class LocationServiceImpl implements LocationService {
 
     private LocationDao locationDao;
 
-    @Autowired // DI
+    @Autowired // DI - Dependency Injection - constructor level preferred
     public LocationServiceImpl(LocationDao locationDao) {
         this.locationDao = locationDao;
     }
@@ -34,17 +32,17 @@ public class LocationServiceImpl implements LocationService{
     public List<LocationDto> fetchAllLocations() {
 
         //findAll will return a list of entities of type LocationEntity
-        List <LocationEntity> allLocationsEntity = locationDao.findAll();
+        List<LocationEntity> allLocationsEntity = locationDao.findAll();
 
         //these entities however need to be copied into a collection of DTO, which the method returns
-        List <LocationDto> allLocationsDto= new ArrayList<LocationDto>();
+        List<LocationDto> allLocationsDto = new ArrayList<LocationDto>();
 
         //traverse the entity collection and copy each element into a DTO, which is added to the collection of SuperTypeDtos
         //using an enhanced for loop:
-        for (LocationEntity eachLocationEntity : allLocationsEntity){
+        for (LocationEntity eachLocationEntity : allLocationsEntity) {
             LocationDto eachLocationDto = new LocationDto();
             //copy each entity into a LocationDto object, using BeanUtils
-            BeanUtils.copyProperties(eachLocationEntity,eachLocationDto);
+            BeanUtils.copyProperties(eachLocationEntity, eachLocationDto);
             //add each dto to the collection
             allLocationsDto.add(eachLocationDto);
         }
@@ -57,21 +55,22 @@ public class LocationServiceImpl implements LocationService{
     public LocationDto fetchALocation(int locationId) {
         Optional<LocationEntity> locationEntityOptional = locationDao.findById(locationId);
         LocationDto locationDto = null;
+
         // check if superTypeEntityOptional has the data
-        if(locationEntityOptional.isPresent()){
+        if (locationEntityOptional.isPresent()) {
             //if so, copy the entity object into a dto object
-            locationDto =new LocationDto();
-            BeanUtils.copyProperties(locationEntityOptional.get(),locationDto);
+            locationDto = new LocationDto();
+            BeanUtils.copyProperties(locationEntityOptional.get(), locationDto);
 
             //also include the Sighting collection which Location object contains
             List<SightingDto> allSightingsDto = new ArrayList<SightingDto>();
-            for(SightingEntity eachSightingEntity: locationEntityOptional.get().getAllsightings()){
+            for (SightingEntity eachSightingEntity : locationEntityOptional.get().getAllsightings()) {
                 SightingDto eachSightingDto = new SightingDto();
                 BeanUtils.copyProperties(eachSightingEntity, eachSightingDto);
 
                 //now, also include the Supers collection which Sighting object contains
                 List<SuperDto> allSupersDto = new ArrayList<SuperDto>();
-                for(SuperEntity eachSuperEntity: eachSightingEntity.getAllSupers()){
+                for (SuperEntity eachSuperEntity : eachSightingEntity.getAllSupers()) {
                     SuperDto eachSuperDto = new SuperDto();
                     BeanUtils.copyProperties(eachSuperEntity, eachSuperDto);
                     allSupersDto.add(eachSuperDto);
@@ -82,7 +81,6 @@ public class LocationServiceImpl implements LocationService{
                 //now add each sighting (containing the super collection) to the sighting collection
                 allSightingsDto.add(eachSightingDto);
             }
-
             //set the Sighting collection (containing also the Super collection) in each LocationDto obj
             locationDto.setAllsightings(allSightingsDto);
         }
@@ -90,6 +88,7 @@ public class LocationServiceImpl implements LocationService{
         else {
             throw new ApplicationException();
         }
+
         return locationDto;
     }
 
@@ -104,9 +103,9 @@ public class LocationServiceImpl implements LocationService{
         LocationEntity savedLocationEntity = locationDao.saveAndFlush(newLocationEntity);
 
         // set the type id in the new dto object
-       newLocation.setLocationId(savedLocationEntity.getLocationId());
+        newLocation.setLocationId(savedLocationEntity.getLocationId());
 
-        //return the  Dto
+        //return the Dto (now containing the Id)
         return newLocation;
     }
 
@@ -116,19 +115,18 @@ public class LocationServiceImpl implements LocationService{
 
         // the incoming dto has to be copied into an entity object
         LocationEntity updateLocationEntity = new LocationEntity();
-        BeanUtils.copyProperties(updateLocation,updateLocationEntity);
+        BeanUtils.copyProperties(updateLocation, updateLocationEntity);
 
         // saveAndFlush
         LocationEntity savedLocationEntity = locationDao.saveAndFlush(updateLocationEntity);
 
+        //Return object
         return updateLocation;
-
     }
 
     @Override
     public void removeLocation(int locationId) {
         //use the deleteById function
         locationDao.deleteById(locationId);
-
     }
 }

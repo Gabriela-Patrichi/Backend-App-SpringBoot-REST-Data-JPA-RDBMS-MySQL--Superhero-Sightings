@@ -6,6 +6,9 @@ import lombok.*;
 
 import java.util.List;
 
+
+// MAKING USE OF LOMBOK , INCLUDE AN EMPTY CONSTRUCTOR, A CONSTRUCTOR WITH ALL VAR, ALL GETTERS AND SETTERS ,
+// TOSTRING METHOD AND EQUALS AND HASH CODE
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
@@ -14,25 +17,25 @@ import java.util.List;
 @EqualsAndHashCode // equals and hash code
 
 @Entity //declare the class as an entity
-@Table(name="organization_details") //map the class to the table named organization_details
+@Table(name = "organization_details") //map the class to the table named organization_details
 public class OrganizationEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) //auto-generated Id
-    @Column(name="org_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto-generated Id
+    @Column(name = "org_id")
     private int orgId;
 
-    @Column(name="org_name")
+    @Column(name = "org_name")
     private String orgName;
 
-    @Column(name="org_description")
+    @Column(name = "org_description")
     private String orgDescription;
 
-    @Column(name="org_contact_info")
+    @Column(name = "org_contact_info")
     private String orgContactInfo;
 
     @ManyToOne
-    @JoinColumn(name="org_type")
+    @JoinColumn(name = "org_type")
     private SuperTypeEntity orgSuperTypeEntity; //object composition
 
     //implement the ManyToMany relationship between the Supers and Organizations
@@ -41,11 +44,10 @@ public class OrganizationEntity {
     //2nd attribute is joinColumns (on the FK column which connects the owner entity and the 3rd table)
     //then inverseJoinColumn (map on the FK column of the other column referencing the 3rd table)
     @ManyToMany
-    @JoinTable (name = "super_organization",
-            joinColumns = @JoinColumn(name="org_id"),
+    @JoinTable(name = "super_organization",
+            joinColumns = @JoinColumn(name = "org_id"),
             inverseJoinColumns = @JoinColumn(name = "super_id"))
     private List<SuperEntity> allSupers; //introducing a collection of Supers
-
 
 
 }

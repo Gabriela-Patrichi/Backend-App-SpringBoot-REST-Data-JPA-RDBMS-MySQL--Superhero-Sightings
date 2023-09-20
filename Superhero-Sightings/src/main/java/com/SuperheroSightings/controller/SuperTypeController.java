@@ -12,6 +12,7 @@ import java.util.List;
 public class SuperTypeController {
 
     SuperTypeService superTypeService;
+
     @Autowired
     public SuperTypeController(SuperTypeService superTypeService) {
         this.superTypeService = superTypeService;
@@ -21,7 +22,7 @@ public class SuperTypeController {
     // 1. fetch all super types
     // http://localhost:7474/supertypes
     @GetMapping("/supertypes")
-    public List<SuperTypeDto> fetchAllSuperTypes(){
+    public List<SuperTypeDto> fetchAllSuperTypes() {
         return superTypeService.fetchAllSuperTypes();
     }
 

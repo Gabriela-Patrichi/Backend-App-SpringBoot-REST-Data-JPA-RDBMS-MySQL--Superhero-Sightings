@@ -25,13 +25,14 @@ public class OrganizationController {
     // 1. fetch all organizations
     // http://localhost:7474/organizations
     @GetMapping("/organizations")
-    public List<OrganizationDto> fetchAllOrganizations(){
+    public List<OrganizationDto> fetchAllOrganizations() {
         return organizationService.fetchAllOrganizations();
     }
 
     // 2. fetch an organization
     // http://localhost:7474/organizations/1
-    @GetMapping("/organizations/{bid}")  // PathVariable with the name bid and should be extracted and stored in orgId java var
+    @GetMapping("/organizations/{bid}")
+    // PathVariable with the name bid and should be extracted and stored in orgId java var
     public ResponseEntity<OrganizationDto> fetchAnOrganization(@PathVariable("bid") int orgId) {
         return new ResponseEntity<OrganizationDto>(organizationService.fetchAnOrganization(orgId), HttpStatus.OK);
     }
