@@ -2,7 +2,7 @@
 
 **Backend:**
 - Developed in IntelliJ using Java.
-- Uses Spring Framework, including Spring Data JPA with ORM for management of relational data.
+- Uses SpringBoot Framework, including Spring Data JPA with ORM for management of relational data.
 - Implements both unidirectional and bidirectional mappings for relationships.
 - Provides full CRUD operations for all entities, along with additional custom finder methods.
 - Well-structured, layered architecture pattern consisting of Controller, Service, DAO, and Model packages.
